@@ -1,24 +1,25 @@
 package com.alavpa.logger
 
 import android.app.Activity
-import android.content.ClipData
 import android.content.Intent
 import android.os.Build
+import android.support.design.widget.FloatingActionButton
 import android.view.DragEvent
 import android.view.LayoutInflater
 import android.view.View
 import android.view.View.OnDragListener
 import android.view.ViewGroup
-import android.widget.LinearLayout
 
-class Logger(activity: Activity) {
+class Logger(activity: Activity, defaultContainer: Int = R.id.container1) {
 
     init {
-        setDebugContentView(activity)
+        setDebugContentView(activity, defaultContainer)
     }
 
+    @Suppress("DEPRECATION")
     private fun setDebugContentView(
-        activity: Activity
+        activity: Activity,
+        defaultContainer: Int
     ) {
         val rootView: ViewGroup = activity.findViewById(android.R.id.content)
 
@@ -29,24 +30,28 @@ class Logger(activity: Activity) {
                 true
             )
 
+        val button = FloatingActionButton(activity).apply {
+            this.setImageResource(R.drawable.ic_bug_report_black_24dp)
+        }
 
-        view.findViewById<View>(R.id.debugFab).setOnClickListener {
+        button.setOnClickListener {
             activity.startActivity(Intent(activity, LogActivity::class.java))
         }
 
-        view.findViewById<View>(R.id.debugFab).setOnLongClickListener { fab ->
-            val data = ClipData.newPlainText("", "")
+        button.setOnLongClickListener { fab ->
             val shadowBuilder = View.DragShadowBuilder(fab)
 
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
-                fab.startDragAndDrop(data, shadowBuilder, fab, 0)
+                fab.startDragAndDrop(null, shadowBuilder, fab, 0)
             } else {
-                fab.startDrag(data, shadowBuilder, fab, 0)
+                fab.startDrag(null, shadowBuilder, fab, 0)
             }
 
             fab.visibility = View.INVISIBLE
             return@setOnLongClickListener true
         }
+
+        view.findViewById<ViewGroup>(defaultContainer).addView(button)
 
         view.findViewById<View>(R.id.container1).setOnDragListener(MyDragListener())
         view.findViewById<View>(R.id.container2).setOnDragListener(MyDragListener())
@@ -73,7 +78,7 @@ class Logger(activity: Activity) {
                     val view = event.localState as View
                     val owner = view.parent as ViewGroup
                     owner.removeView(view)
-                    val container = v as LinearLayout
+                    val container = v as ViewGroup
                     container.addView(view)
                     view.visibility = View.VISIBLE
                 }
