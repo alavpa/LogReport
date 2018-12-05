@@ -5,14 +5,6 @@ apply plugin: 'kotlin-android'
 apply plugin: 'kotlin-android-extensions'
 
 android {
-    signingConfigs {
-        config {
-            keyAlias 'logreport'
-            keyPassword '12345678q'
-            storeFile file('../keystore')
-            storePassword '12345678q'
-        }
-    }
     compileSdkVersion 27
     defaultConfig {
         applicationId "com.alavpa.logreport"
@@ -24,7 +16,6 @@ android {
     }
     buildTypes {
         release {
-            signingConfig signingConfigs.config
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
