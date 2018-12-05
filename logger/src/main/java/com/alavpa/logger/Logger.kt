@@ -11,28 +11,20 @@ import android.view.View.OnDragListener
 import android.view.ViewGroup
 import android.widget.LinearLayout
 
-class Logger(layout: Int, activty: Activity, setContentView: (Int) -> Unit) {
+class Logger(activity: Activity) {
 
     init {
-        if (BuildConfig.DEBUG) {
-            setDebugContentView(activty, layout, setContentView)
-        } else {
-            setContentView(layout)
-        }
+        setDebugContentView(activity)
     }
 
     private fun setDebugContentView(
-        activity: Activity,
-        layout: Int,
-        setContentView: (Int) -> Unit
+        activity: Activity
     ) {
-        setContentView(R.layout.activity_logger_base)
-
-        val rootView: ViewGroup = activity.findViewById(R.id.root)
+        val rootView: ViewGroup = activity.findViewById(android.R.id.content)
 
         val view = LayoutInflater.from(activity)
             .inflate(
-                layout,
+                R.layout.activity_logger_base,
                 rootView,
                 true
             )
@@ -61,10 +53,6 @@ class Logger(layout: Int, activty: Activity, setContentView: (Int) -> Unit) {
         view.findViewById<View>(R.id.container3).setOnDragListener(MyDragListener())
         view.findViewById<View>(R.id.container4).setOnDragListener(MyDragListener())
 
-    }
-
-    private fun setContentView(layout: Int, activity: Activity) {
-        activity.setContentView(layout)
     }
 
     internal inner class MyDragListener : OnDragListener {

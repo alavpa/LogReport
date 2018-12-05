@@ -16,3 +16,4 @@ proguard/
 *.log
 # OSX files
 .DS_Store
+*.jks
