@@ -1,9 +1,6 @@
 package com.alavpa.logreport
 
-import android.content.Intent
 import android.os.Bundle
-import android.support.v7.app.AppCompatActivity
-import com.alavpa.logger.LogActivity
 import com.alavpa.logger.Logger
 
 class MainActivity : BaseActivity() {
