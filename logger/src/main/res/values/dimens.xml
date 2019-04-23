@@ -1,0 +1,3 @@
+<resources>
+    <dimen name="logger_margin_button">16dp</dimen>
+</resources>

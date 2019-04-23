@@ -9,6 +9,8 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.View.OnDragListener
 import android.view.ViewGroup
+import android.view.ViewGroup.LayoutParams.WRAP_CONTENT
+import android.widget.LinearLayout
 
 class Logger(activity: Activity, defaultContainer: Int = R.id.container1) {
 
@@ -34,6 +36,11 @@ class Logger(activity: Activity, defaultContainer: Int = R.id.container1) {
             this.setImageResource(R.drawable.ic_bug_report_black_24dp)
         }
 
+        val margin = activity.resources.getDimensionPixelSize(R.dimen.logger_margin_button)
+        button.layoutParams = LinearLayout.LayoutParams(WRAP_CONTENT, WRAP_CONTENT).apply {
+            this.setMargins(margin, margin, margin, margin)
+        }
+
         button.setOnClickListener {
             activity.startActivity(Intent(activity, LogActivity::class.java))
         }
@@ -57,7 +64,6 @@ class Logger(activity: Activity, defaultContainer: Int = R.id.container1) {
         view.findViewById<View>(R.id.container2).setOnDragListener(MyDragListener())
         view.findViewById<View>(R.id.container3).setOnDragListener(MyDragListener())
         view.findViewById<View>(R.id.container4).setOnDragListener(MyDragListener())
-
     }
 
     internal inner class MyDragListener : OnDragListener {
